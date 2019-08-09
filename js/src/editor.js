@@ -1,24 +1,24 @@
 const { createHigherOrderComponent } = wp.compose;
 const { Fragment } = wp.element;
 
-const getBlockNumber = ( clientId ) => {
-	// Got the block number for a given block ID, starting at 1
-	return wp.data.select( 'core/editor' ).getBlockIndex( clientId ) + 1;
-};
-
 const extendBlock = createHigherOrderComponent( ( BlockEdit ) => {
 	return wp.data.withSelect( ( select, props ) => {
+		// Add block index prop to every block (not ideal?)
 		return {
 			...props,
-			blockNumber: getBlockNumber( props.clientId ),
+			blockNumber: select( 'core/editor' ).getBlockIndex( props.clientId ) + 1,
 		};
 	} )( ( props ) => {
-		return (
-			<Fragment>
-				<p><small><i>Block number { props.blockNumber }</i></small></p>
-				<BlockEdit { ...props } />
-			</Fragment>
-		);
+		// Display index on paragraphs only
+		if ( props.name === 'core/paragraph' ) {
+			return (
+				<Fragment>
+					<p style={ { color: 'grey' } }><small><i>This is block number <b>{ props.blockNumber }</b> and it is a paragraph</i></small></p>
+					<BlockEdit { ...props } />
+				</Fragment>
+			);
+		}
+		return <BlockEdit { ...props } />;
 	} );
 }, 'ExtendedBlock' );
 
