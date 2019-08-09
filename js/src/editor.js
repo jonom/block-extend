@@ -1,7 +1,7 @@
 const { createHigherOrderComponent } = wp.compose;
 const { Fragment } = wp.element;
 
-const extendBlock = createHigherOrderComponent( ( BlockEdit ) => {
+const numberedParagraphs = createHigherOrderComponent( ( BlockEdit ) => {
 	return wp.data.withSelect( ( select, props ) => {
 		// Add block index prop to every block (not ideal?)
 		return {
@@ -20,6 +20,6 @@ const extendBlock = createHigherOrderComponent( ( BlockEdit ) => {
 		}
 		return <BlockEdit { ...props } />;
 	} );
-}, 'ExtendedBlock' );
+}, 'NumberedParagraph' );
 
-wp.hooks.addFilter( 'editor.BlockEdit', 'xwp/block-extend', extendBlock );
+wp.hooks.addFilter( 'editor.BlockEdit', 'xwp/numbered-paragraphs', numberedParagraphs );

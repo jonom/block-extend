@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: Block Extend
- * Description: Extend Gutenberg editor blocks.
+ * Plugin Name: Numbered Paragraphs
+ * Description: Extend Gutenberg editor blocks to show indexes on paragraphs.
  * Version: 0.1.0
  * Author: XWP
  * Author URI: https://xwp.co
- * Text Domain: block-extend
+ * Text Domain: numbered-paragraphs
  */
 
 namespace XWP\BlockExtend;
@@ -15,6 +15,6 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
-$block_extend_plugin = new BlockExtendPlugin( new Plugin( __FILE__ ) );
+$numbered_paragraphs_plugin = new BlockExtendPlugin( new Plugin( __FILE__ ) );
 
-add_action( 'plugins_loaded', [ $block_extend_plugin, 'init' ] );
+add_action( 'plugins_loaded', [ $numbered_paragraphs_plugin, 'init' ] );
