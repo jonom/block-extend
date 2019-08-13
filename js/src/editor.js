@@ -7,22 +7,25 @@ const numberedParagraphs = createHigherOrderComponent( ( BlockEdit ) => {
 		const paragraphs = select( 'core/editor' ).getBlocks().filter( ( block ) => block.name === 'core/paragraph' );
 		const paragraphIndex = paragraphs.findIndex( ( block ) => block.clientId === props.clientId );
 		const paragraphNumber = ( paragraphIndex >= 0 ) ? paragraphIndex + 1 : null;
+		const blockIndex = select( 'core/editor' ).getBlockIndex( props.clientId );
 		return {
 			...props,
-			blockNumber: select( 'core/editor' ).getBlockIndex( props.clientId ) + 1,
+			blockNumber: blockIndex >= 0 ? blockIndex + 1 : null,
 			paragraphNumber,
 		};
 	} )( ( props ) => {
-		// Display index on paragraphs only
-		if ( props.name === 'core/paragraph' ) {
+		const { blockNumber, paragraphNumber } = props;
+		const originalBlock = <BlockEdit { ...props } />;
+		// Display index only on root paragraphs
+		if ( props.name === 'core/paragraph' && blockNumber && paragraphNumber ) {
 			return (
 				<Fragment>
-					<p style={ { color: 'grey', margin: 0 } }><small><i>↓ This is block number <b>{ props.blockNumber }</b> and paragraph number <b>{ props.paragraphNumber }</b></i></small></p>
-					<BlockEdit { ...props } />
+					<p style={ { color: 'grey', margin: 0 } }><small><i>↓ This is block number <b>{ blockNumber }</b> and paragraph number <b>{ paragraphNumber }</b></i></small></p>
+					{ originalBlock }
 				</Fragment>
 			);
 		}
-		return <BlockEdit { ...props } />;
+		return originalBlock;
 	} );
 }, 'NumberedParagraph' );
 
