@@ -26,7 +26,10 @@ const BlockEditWithParagraphNumbers = ( BlockEdit ) => {
 		if ( props.name === 'core/paragraph' && blockNumber && paragraphNumber ) {
 			return (
 				<Fragment>
-					<p style={ { color: 'grey', margin: 0 } }><small><i>↓ This is block number <b>{ blockNumber }</b> and paragraph number <b>{ paragraphNumber }</b></i></small></p>
+					<p style={ { color: 'grey', margin: 0, fontSize: '.75em' } }>
+						↓ This is block number <b>{ blockNumber } </b>
+						and paragraph number <b>{ paragraphNumber }</b>
+					</p>
 					{ originalBlock }
 				</Fragment>
 			);
